@@ -3,28 +3,53 @@ import prompt
 CM_IN_M = 100
 MM_IN_CM = 10
 
-OPTION_CM_TO_M = 1
-OPTION_M_TO_CM = 2
-OPTION_CM_TO_MM = 3
-
 
 def convert():
-    option = prompt.integer(
-        "Выберите вариант конвертирования: \n 1. см -> м\n 2. м -> см\n 3. см -> мм\n")
+    data = [
+        {
+            'from_type': 'cm',
+            'to_type': 'm',
+            'key': 1,
+            'handler': lambda x: x / CM_IN_M,
+        },
+        {
+            'from_type': 'm',
+            'to_type': 'cm',
+            'key': 2,
+            'handler': lambda x: x * CM_IN_M,
+        },
+        {
+            'from_type': 'cm',
+            'to_type': 'mm',
+            'key': 3,
+            'handler': lambda x: x * MM_IN_CM,
+        },
+        {
+            'from_type': 'mm',
+            'to_type': 'cm',
+            'key': 4,
+            'handler': lambda x: x / MM_IN_CM,
+        },
+    ]
+
+    message = "Выберите вариант конвертирования:\n"
+    for item in data:
+        key = item.get('key')
+        from_type = item.get('from_type')
+        to_type = item.get('to_type')
+
+        message += f'{key}. {from_type} -> {to_type}' + "\n"
+
+    option = prompt.integer(message)
 
     number = prompt.real("Введите число: ")
 
-    if option == OPTION_CM_TO_M:
-        result = number / CM_IN_M
-        print(number, 'см', '=', result, 'м')
+    for item in data:
+        if item.get('key') == option:
+            result = item.get('handler')(number)
+            from_type = item.get('from_type')
+            to_type = item.get('to_type')
+            print(number, from_type, '=', result, to_type)
+            return
 
-    elif option == OPTION_M_TO_CM:
-        result = number * CM_IN_M
-        print(number, 'м', '=', result, 'cм')
-
-    elif option == OPTION_CM_TO_MM:
-        result = number * MM_IN_CM
-        print(number, 'см', '=', result, 'мм')
-
-    else:
-        raise 'Неизвестный тип'
+    raise 'Неизвестный тип'
