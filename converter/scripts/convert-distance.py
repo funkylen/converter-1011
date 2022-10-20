@@ -1,8 +1,8 @@
-from converter.converter import convert
+from converter.converter import run
 
 
 def main():
-    convert()
+    run()
 
 
 if __name__ == '__main__':

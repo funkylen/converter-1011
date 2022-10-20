@@ -1,55 +1,70 @@
 import prompt
 
-CM_IN_M = 100
-MM_IN_CM = 10
 
 
-def convert():
+def run():
     data = [
         {
-            'from_type': 'cm',
-            'to_type': 'm',
+            'type': 'cm',
             'key': 1,
-            'handler': lambda x: x / CM_IN_M,
+            'pow' : -2,
         },
         {
-            'from_type': 'm',
-            'to_type': 'cm',
+            'type': 'km',
             'key': 2,
-            'handler': lambda x: x * CM_IN_M,
+            'pow' : 3,
         },
         {
-            'from_type': 'cm',
-            'to_type': 'mm',
+            'type': 'dm',
             'key': 3,
-            'handler': lambda x: x * MM_IN_CM,
+            'pow' : -1,
         },
         {
-            'from_type': 'mm',
-            'to_type': 'cm',
+            'type': 'm',
             'key': 4,
-            'handler': lambda x: x / MM_IN_CM,
+            'pow' : 0,
         },
+        {
+            'type': 'mm',
+            'key': 5,
+            'pow' : -3,
+        }
     ]
 
-    message = "Выберите вариант конвертирования:\n"
+
+
+    message = "Выберите:\n"
     for item in data:
+        type = item.get('type')
         key = item.get('key')
-        from_type = item.get('from_type')
-        to_type = item.get('to_type')
+        
+        message += f"{key}. {type}\n"
+    
 
-        message += f'{key}. {from_type} -> {to_type}' + "\n"
+    option1 = prompt.integer(message)
 
-    option = prompt.integer(message)
+    message = "Выберите :\n"
+    for item in data:
+        type = item.get('type')
+        key = item.get('key')
+        
+        message += f"{key}. {type}\n"
+    
+
+    option2 = prompt.integer(message)
 
     number = prompt.real("Введите число: ")
 
     for item in data:
-        if item.get('key') == option:
-            result = item.get('handler')(number)
-            from_type = item.get('from_type')
-            to_type = item.get('to_type')
-            print(number, from_type, '=', result, to_type)
-            return
+        if item.get('key') == option1:
+            pow1 = item.get('pow')
+    for item in data:
+        if item.get('key') == option2:
+            pow2 = item.get('pow')
+    result = convert(number,pow1,pow2)
+    print(result)
+   
 
-    raise 'Неизвестный тип'
+def convert(num,pow1,pow2):
+    print(pow1,pow2)
+    return num * 10**-(pow2-pow1)
