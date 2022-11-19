@@ -21,3 +21,4 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.scripts]
 convert-distance-interactive = 'converter.scripts.convert-distance-interactive:main'
 convert-distance = 'converter.scripts.convert-distance:main'
+convert-currency = 'converter.scripts.convert-currency:main'
